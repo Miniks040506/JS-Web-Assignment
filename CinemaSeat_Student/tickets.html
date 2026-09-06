@@ -1,0 +1,75 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>CineSeat • My Tickets</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body data-page="tickets">
+    <header class="topbar">
+      <nav class="nav">
+        <a class="brand" href="index.html">Cine<span>Seat</span></a>
+        <div class="nav-links">
+          <a href="index.html">Movies</a><a href="booking.html">Book Ticket</a
+          ><a class="active" href="tickets.html">My Tickets <span id="ticketCount"></span></a>
+        </div>
+      </nav>
+    </header>
+    <main class="page">
+      <section class="hero">
+        <div class="hero-card hero-copy">
+          <div class="eyebrow">Your bookings</div>
+          <h1>Movie nights,<br />all in one place.</h1>
+          <p class="muted">Review ticket details, search bookings, filter them, open full information, or cancel a booking.</p>
+        </div>
+        <div class="hero-card hero-stat">
+          <span class="muted">Active tickets</span><strong id="activeTicketCount">0</strong><span class="muted">bookings saved</span>
+        </div>
+      </section>
+      <section>
+        <div class="section-head">
+          <div>
+            <div class="eyebrow">Booking history</div>
+            <h2>My tickets</h2>
+          </div>
+          <div class="controls">
+            <input id="ticketSearch" class="field" placeholder="Movie, cinema, booking ID..." />
+            <select id="ticketSort" class="field">
+              <option value="newest">Newest booked</option>
+              <option value="showtime">Showtime</option>
+              <option value="price-desc">Highest total</option>
+            </select>
+          </div>
+        </div>
+        <div id="ticketList" class="ticket-list"></div>
+        <div id="ticketEmpty" class="empty hidden">
+          <h3>No tickets yet</h3>
+          <p>Book a movie first. Your confirmed tickets will appear here.</p>
+          <a class="btn btn-primary" href="index.html">Browse movies</a>
+        </div>
+      </section>
+    </main>
+    <div id="detailModal" class="modal-backdrop hidden">
+      <div class="modal">
+        <div class="eyebrow">Ticket details</div>
+        <h2 id="detailTitle">Booking</h2>
+        <div id="detailContent"></div>
+        <div class="modal-actions"><button id="closeDetailBtn" class="btn btn-secondary">Close</button></div>
+      </div>
+    </div>
+    <div id="cancelModal" class="modal-backdrop hidden">
+      <div class="modal">
+        <div class="eyebrow">Cancel ticket</div>
+        <h2>Cancel this booking?</h2>
+        <p class="muted">The booked seats will become available again for the same showtime.</p>
+        <div id="cancelSummary"></div>
+        <div class="modal-actions">
+          <button id="keepTicketBtn" class="btn btn-secondary">Keep ticket</button
+          ><button id="confirmCancelBtn" class="btn btn-danger">Cancel booking</button>
+        </div>
+      </div>
+    </div>
+    <script src="script.js"></script>
+  </body>
+</html>

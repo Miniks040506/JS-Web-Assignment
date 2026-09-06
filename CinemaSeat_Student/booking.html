@@ -1,0 +1,92 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>CineSeat • Book</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body data-page="booking">
+    <header class="topbar">
+      <nav class="nav">
+        <a class="brand" href="index.html">Cine<span>Seat</span></a>
+        <div class="nav-links">
+          <a href="index.html">Movies</a><a class="active" href="booking.html">Book Ticket</a
+          ><a href="tickets.html">My Tickets <span id="ticketCount"></span></a>
+        </div>
+      </nav>
+    </header>
+    <main class="page">
+      <div class="booking-steps">
+        <span class="step">1 Movie</span><span class="step active">2 Cinema & Seats</span><span class="step">3 Ticket</span>
+      </div>
+      <div id="bookingFlash"></div>
+      <section class="booking-layout">
+        <div>
+          <div class="panel">
+            <div id="selectedMovieSummary" class="movie-summary"></div>
+            <div class="section-head">
+              <div>
+                <div class="eyebrow">Step A</div>
+                <h2>Select cinema</h2>
+              </div>
+              <button id="changeMovieBtn" class="btn btn-secondary">Change movie</button>
+            </div>
+            <div id="cinemaList" class="cinema-list"></div>
+            <div class="section-head">
+              <div>
+                <div class="eyebrow">Step B</div>
+                <h2>Select showtime</h2>
+              </div>
+            </div>
+            <div id="showtimeList" class="showtime-list"></div>
+          </div>
+          <div class="panel" style="margin-top: 20px">
+            <div class="section-head">
+              <div>
+                <div class="eyebrow">Step C</div>
+                <h2>Choose seats</h2>
+                <p class="filters-note">Standard rows A–C • VIP rows D–E • maximum 6 seats</p>
+              </div>
+            </div>
+            <div class="screen"></div>
+            <div id="seatGrid" class="seat-grid"></div>
+            <div class="legend">
+              <span><i></i>Standard</span><span><i class="vip"></i>VIP</span><span><i class="sel"></i>Selected</span
+              ><span><i class="occ"></i>Sold</span>
+            </div>
+            <p id="seatMessage" class="message"></p>
+          </div>
+        </div>
+        <aside class="panel summary-box">
+          <div class="eyebrow">Booking summary</div>
+          <h2>Your order</h2>
+          <div class="summary-row"><span>Movie</span><strong id="sumMovie">—</strong></div>
+          <div class="summary-row"><span>Cinema</span><strong id="sumCinema">—</strong></div>
+          <div class="summary-row"><span>Showtime</span><strong id="sumShowtime">—</strong></div>
+          <div class="summary-row"><span>Seats</span><strong id="sumSeats">—</strong></div>
+          <div class="summary-row"><span>Subtotal</span><strong id="sumSubtotal">0 ₫</strong></div>
+          <div class="promo">
+            <input id="promoInput" class="field" placeholder="Promo code" /><button id="applyPromoBtn" class="btn btn-secondary">Apply</button>
+          </div>
+          <p id="promoMessage" class="message"></p>
+          <div class="summary-row"><span>Discount</span><strong id="sumDiscount">0 ₫</strong></div>
+          <div class="summary-row summary-total"><span>Total</span><strong id="sumTotal">0 ₫</strong></div>
+          <button id="bookBtn" class="btn btn-primary" style="width: 100%; margin-top: 16px">Review booking</button>
+        </aside>
+      </section>
+    </main>
+    <div id="confirmModal" class="modal-backdrop hidden">
+      <div class="modal">
+        <div class="eyebrow">Final check</div>
+        <h2>Confirm your booking</h2>
+        <div id="modalBookingDetails"></div>
+        <div class="modal-actions">
+          <button id="closeModalBtn" class="btn btn-secondary">Go back</button>
+          <button id="confirmBookingBtn" class="btn btn-primary">Confirm & book</button>
+        </div>
+      </div>
+    </div>
+    <script src="script.js"></script>
+  </body>
+</html>

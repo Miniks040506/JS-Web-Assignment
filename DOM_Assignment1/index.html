@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>StudyFlow - JavaScript DOM Capstone</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="app-shell">
+    <header class="hero">
+      <div>
+        <p class="eyebrow">JavaScript + DOM Capstone</p>
+        <h1>StudyFlow</h1>
+        <p class="subtitle">Build a task dashboard using only vanilla JavaScript.</p>
+      </div>
+      <button id="theme-btn" class="secondary-btn" type="button">🌙 Dark mode</button>
+    </header>
+
+    <section class="panel" aria-labelledby="add-task-title">
+      <h2 id="add-task-title">Add a study task</h2>
+      <form id="task-form" novalidate>
+        <div class="form-grid">
+          <label>
+            Task title
+            <input id="task-title" type="text" placeholder="e.g. Practice array methods" maxlength="60" />
+          </label>
+
+          <label>
+            Subject
+            <select id="task-subject">
+              <option value="JavaScript">JavaScript</option>
+              <option value="HTML/CSS">HTML/CSS</option>
+              <option value="DOM">DOM</option>
+              <option value="Other">Other</option>
+            </select>
+          </label>
+
+          <label>
+            Priority
+            <select id="task-priority">
+              <option value="low">Low</option>
+              <option value="medium" selected>Medium</option>
+              <option value="high">High</option>
+            </select>
+          </label>
+
+          <label>
+            Estimated minutes
+            <input id="task-minutes" type="number" min="5" max="240" step="5" value="30" />
+          </label>
+        </div>
+
+        <p id="form-error" class="error-message" aria-live="polite"></p>
+        <button class="primary-btn" type="submit">+ Add task</button>
+      </form>
+    </section>
+
+    <section class="stats-grid" aria-label="Task statistics">
+      <article class="stat-card"><span>Total</span><strong id="stat-total">0</strong></article>
+      <article class="stat-card"><span>Completed</span><strong id="stat-completed">0</strong></article>
+      <article class="stat-card"><span>Remaining</span><strong id="stat-remaining">0</strong></article>
+      <article class="stat-card"><span>Minutes left</span><strong id="stat-minutes">0</strong></article>
+    </section>
+
+    <section class="panel controls-panel">
+      <div class="filter-group" role="group" aria-label="Filter tasks">
+        <button class="filter-btn active" data-filter="all" type="button">All</button>
+        <button class="filter-btn" data-filter="active" type="button">Active</button>
+        <button class="filter-btn" data-filter="completed" type="button">Completed</button>
+        <button class="filter-btn" data-filter="high" type="button">High priority</button>
+      </div>
+
+      <div class="control-grid">
+        <label>
+          Search
+          <input id="search-input" type="search" placeholder="Search task or subject..." />
+        </label>
+        <label>
+          Sort
+          <select id="sort-select">
+            <option value="newest">Newest first</option>
+            <option value="oldest">Oldest first</option>
+            <option value="priority">Priority</option>
+            <option value="minutes">Estimated minutes</option>
+          </select>
+        </label>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="section-heading">
+        <div>
+          <h2>Your tasks</h2>
+          <p id="result-message" class="muted">No tasks yet.</p>
+        </div>
+        <button id="clear-completed-btn" class="danger-btn" type="button">Clear completed</button>
+      </div>
+
+      <div id="task-list" class="task-list"></div>
+      <div id="empty-state" class="empty-state">
+        <div class="empty-icon">📚</div>
+        <h3>Nothing to show</h3>
+        <p>Add a task or change your filters.</p>
+      </div>
+    </section>
+  </main>
+
+  <div id="confirm-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div class="modal-card">
+      <button id="modal-close-btn" class="modal-close" type="button" aria-label="Close">×</button>
+      <h2 id="modal-title">Delete task?</h2>
+      <p>This action cannot be undone.</p>
+      <div class="modal-actions">
+        <button id="modal-cancel-btn" class="secondary-btn" type="button">Cancel</button>
+        <button id="modal-confirm-btn" class="danger-btn" type="button">Delete</button>
+      </div>
+    </div>
+  </div>
+  <div id="modal-overlay" class="overlay hidden"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>

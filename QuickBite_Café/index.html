@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="QuickBite Café JavaScript DOM review assignment" />
+  <title>QuickBite Café — Order Dashboard</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="page-glow page-glow-one"></div>
+  <div class="page-glow page-glow-two"></div>
+
+  <header class="site-header">
+    <a class="brand" href="#" aria-label="QuickBite Café home">
+      <span class="brand-mark" aria-hidden="true">QB</span>
+      <span class="brand-copy">
+        <strong>QuickBite</strong>
+        <small>coffee · bites · good mood</small>
+      </span>
+    </a>
+
+    <div class="header-actions">
+      <div class="open-status" aria-label="Store status">
+        <span class="status-dot"></span>
+        <span>Open today · 07:00–22:00</span>
+      </div>
+      <button id="theme-btn" class="icon-button" type="button" aria-label="Toggle theme" title="Toggle theme">
+        <span id="theme-icon" aria-hidden="true">☾</span>
+      </button>
+    </div>
+  </header>
+
+  <main class="app-shell">
+    <section class="hero-section">
+      <div class="hero-copy">
+        <span class="pill pill-accent">JavaScript DOM Review Project</span>
+        <h1>Your café order,<br /><em>made simple.</em></h1>
+        <p>
+          Browse the menu, build an order, unlock promotions and complete checkout — all in one interactive dashboard.
+        </p>
+
+        <div class="hero-metrics" aria-label="Store highlights">
+          <div>
+            <strong id="hero-item-count">0</strong>
+            <span>menu items</span>
+          </div>
+          <div>
+            <strong>4</strong>
+            <span>categories</span>
+          </div>
+          <div>
+            <strong>~12 min</strong>
+            <span>avg. prep</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-card" aria-label="Featured drink">
+        <div class="hero-card-top">
+          <span class="pill pill-light">Barista pick</span>
+          <span class="rating-chip">★ 4.9</span>
+        </div>
+        <div class="featured-art" aria-hidden="true">
+          <span class="featured-cup">☕</span>
+          <span class="steam steam-one">~</span>
+          <span class="steam steam-two">~</span>
+        </div>
+        <div class="hero-card-bottom">
+          <div>
+            <small>Today’s favorite</small>
+            <strong>Caramel Cloud Latte</strong>
+          </div>
+          <span>$5.80</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="workspace">
+      <div class="catalog-column">
+        <div class="section-title-row">
+          <div>
+            <span class="section-kicker">Explore the menu</span>
+            <h2>What are you craving?</h2>
+          </div>
+          <p id="menu-result-message" class="result-message">0 items</p>
+        </div>
+
+        <div class="control-panel">
+          <label class="search-control" for="search-input">
+            <span class="control-icon" aria-hidden="true">⌕</span>
+            <input id="search-input" type="search" placeholder="Search drinks, food, dessert..." autocomplete="off" />
+          </label>
+
+          <label class="sort-control" for="sort-select">
+            <span>Sort by</span>
+            <select id="sort-select">
+              <option value="featured">Featured</option>
+              <option value="price-low">Price: Low to high</option>
+              <option value="price-high">Price: High to low</option>
+              <option value="name">Name: A–Z</option>
+              <option value="rating">Top rated</option>
+            </select>
+          </label>
+        </div>
+
+        <div id="category-filters" class="category-tabs" aria-label="Menu category filter">
+          <button class="category-tab active" type="button" data-category="all">All <span id="count-all">0</span></button>
+          <button class="category-tab" type="button" data-category="coffee">Coffee <span id="count-coffee">0</span></button>
+          <button class="category-tab" type="button" data-category="tea">Tea <span id="count-tea">0</span></button>
+          <button class="category-tab" type="button" data-category="food">Food <span id="count-food">0</span></button>
+          <button class="category-tab" type="button" data-category="dessert">Dessert <span id="count-dessert">0</span></button>
+        </div>
+
+        <div id="menu-grid" class="menu-grid" aria-live="polite"></div>
+
+        <div id="menu-empty" class="empty-card hidden">
+          <div class="empty-illustration" aria-hidden="true">☕</div>
+          <h3>No matches found</h3>
+          <p>Try a different search, category, or favorite selection.</p>
+          <button id="reset-menu-btn" class="secondary-button" type="button">Reset menu filters</button>
+        </div>
+      </div>
+
+      <aside class="order-column">
+        <div class="order-card">
+          <div class="order-card-header">
+            <div>
+              <span class="section-kicker">Current order</span>
+              <h2>Your cart <span id="cart-count" class="cart-count">0</span></h2>
+            </div>
+            <button id="clear-cart-btn" class="link-button danger-text" type="button" disabled>Clear all</button>
+          </div>
+
+          <div id="cart-empty" class="cart-empty-state">
+            <div class="cart-empty-icon" aria-hidden="true">🛍️</div>
+            <strong>Your cart is empty</strong>
+            <p>Add a few favorites from the menu to get started.</p>
+          </div>
+
+          <div id="cart-list" class="cart-list hidden"></div>
+
+          <div class="promo-panel">
+            <div class="promo-heading">
+              <div>
+                <strong>Have a promo code?</strong>
+                <span>One code per order</span>
+              </div>
+              <span class="ticket-icon" aria-hidden="true">%</span>
+            </div>
+            <div class="promo-input-row">
+              <input id="promo-input" type="text" placeholder="e.g. SAVE10" autocomplete="off" maxlength="12" />
+              <button id="apply-promo-btn" class="small-button" type="button">Apply</button>
+            </div>
+            <p id="promo-message" class="form-message" aria-live="polite"></p>
+          </div>
+
+          <div class="price-summary" aria-label="Order price summary">
+            <div><span>Subtotal</span><strong id="subtotal-value">$0.00</strong></div>
+            <div><span>Discount</span><strong id="discount-value" class="success-text">−$0.00</strong></div>
+            <div><span>Service fee</span><strong id="service-value">$0.00</strong></div>
+            <div class="price-total"><span>Total</span><strong id="total-value">$0.00</strong></div>
+          </div>
+
+          <button id="checkout-btn" class="primary-button checkout-button" type="button" disabled>
+            <span>Review order</span>
+            <span aria-hidden="true">→</span>
+          </button>
+        </div>
+      </aside>
+    </section>
+
+    <section class="history-section">
+      <div class="section-title-row history-title-row">
+        <div>
+          <span class="section-kicker">Session summary</span>
+          <h2>Order history</h2>
+        </div>
+        <div class="history-stat-grid">
+          <div>
+            <small>Orders</small>
+            <strong id="history-count">0</strong>
+          </div>
+          <div>
+            <small>Items sold</small>
+            <strong id="history-items">0</strong>
+          </div>
+          <div>
+            <small>Total spent</small>
+            <strong id="history-revenue">$0.00</strong>
+          </div>
+        </div>
+      </div>
+
+      <div id="history-list" class="history-list"></div>
+
+      <div id="history-empty" class="history-empty-state">
+        <span aria-hidden="true">🧾</span>
+        <div>
+          <strong>No completed orders yet</strong>
+          <p>Your confirmed orders will appear here during this session.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div id="modal-overlay" class="modal-overlay hidden"></div>
+
+  <section id="checkout-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="checkout-title">
+    <div class="modal-header">
+      <div>
+        <span class="section-kicker">Almost there</span>
+        <h2 id="checkout-title">Review & place order</h2>
+      </div>
+      <button id="modal-close-btn" class="icon-button modal-close-button" type="button" aria-label="Close checkout">×</button>
+    </div>
+
+    <div class="modal-scroll-area">
+      <div class="review-block">
+        <div class="review-block-title">
+          <strong>Order items</strong>
+          <span id="modal-item-count">0 items</span>
+        </div>
+        <div id="checkout-items" class="checkout-items"></div>
+      </div>
+
+      <div class="customer-form">
+        <label>
+          <span>Customer name <b>*</b></span>
+          <input id="customer-name" type="text" placeholder="e.g. Alex Nguyen" maxlength="30" autocomplete="off" />
+          <small>2–30 characters.</small>
+        </label>
+
+        <label>
+          <span>Order type <b>*</b></span>
+          <select id="order-type">
+            <option value="dine-in">Dine in</option>
+            <option value="takeaway">Takeaway</option>
+          </select>
+          <small>Choose how you want to receive the order.</small>
+        </label>
+
+        <label class="full-field">
+          <span>Order note <em>optional</em></span>
+          <textarea id="order-note" rows="3" maxlength="100" placeholder="Less ice, no straw, warm pastry..."></textarea>
+          <small><span id="note-count">0</span>/100 characters</small>
+        </label>
+      </div>
+
+      <p id="checkout-error" class="form-message error-message" aria-live="polite"></p>
+    </div>
+
+    <div class="modal-footer">
+      <div>
+        <small>Amount to pay</small>
+        <strong id="modal-total-value">$0.00</strong>
+      </div>
+      <div class="modal-actions">
+        <button id="modal-cancel-btn" class="secondary-button" type="button">Back</button>
+        <button id="place-order-btn" class="primary-button" type="button">Place order</button>
+      </div>
+    </div>
+  </section>
+
+  <div id="toast" class="toast hidden" role="status" aria-live="polite"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>

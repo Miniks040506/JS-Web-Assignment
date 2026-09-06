@@ -1,0 +1,56 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>CineSeat • Movies</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body data-page="movies">
+    <header class="topbar">
+      <nav class="nav">
+        <a class="brand" href="index.html">Cine<span>Seat</span></a>
+        <div class="nav-links">
+          <a class="active" href="index.html">Movies</a><a href="booking.html">Book Ticket</a
+          ><a href="tickets.html">My Tickets <span id="ticketCount"></span></a>
+        </div>
+      </nav>
+    </header>
+    <main class="page">
+      <section class="hero">
+        <div class="hero-card hero-copy">
+          <div class="eyebrow">Weekend cinema planner</div>
+          <h1>Pick a story.<br />Book your seat.</h1>
+          <p class="muted">Browse movies, compare genres and ratings, then continue to cinema and seat selection.</p>
+        </div>
+        <div class="hero-card hero-stat">
+          <span class="muted">Now showing</span><strong id="movieCount">0</strong><span class="muted">movies available</span>
+        </div>
+      </section>
+      <section>
+        <div class="section-head">
+          <div>
+            <div class="eyebrow">Now showing</div>
+            <h2>Choose your movie</h2>
+          </div>
+          <div class="controls">
+            <input id="searchInput" class="field" placeholder="Search title..." />
+            <select id="genreFilter" class="field">
+              <option value="all">All genres</option>
+            </select>
+            <select id="sortSelect" class="field">
+              <option value="default">Default order</option>
+              <option value="rating-desc">Highest rating</option>
+              <option value="duration-asc">Shortest first</option>
+              <option value="title-asc">Title A–Z</option>
+            </select>
+          </div>
+        </div>
+        <div id="movieGrid" class="movie-grid"></div>
+        <div id="movieEmpty" class="empty hidden">No movies match your current search and filters.</div>
+      </section>
+    </main>
+    <footer class="footer">CineSeat JavaScript Review Project</footer>
+    <script src="script.js"></script>
+  </body>
+</html>

@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MealCraft — Weekly Meal Planner</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#top" aria-label="MealCraft home">
+      <span class="brand-mark">M</span>
+      <span><strong>MealCraft</strong><small>plan smarter, cook easier</small></span>
+    </a>
+    <div class="topbar-actions">
+      <button class="icon-btn" id="themeBtn" type="button" aria-label="Toggle theme">☾</button>
+      <button class="primary-btn" id="openPantryBtn" type="button">Pantry <span id="pantryCountBadge">0</span></button>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero page-shell">
+      <div>
+        <p class="eyebrow">WEEKLY FOOD PLANNING</p>
+        <h1>Turn what you already have into a better week of meals.</h1>
+        <p class="hero-copy">Browse recipes, compare them with your pantry, build a seven-day plan, and generate one clean shopping list.</p>
+      </div>
+      <div class="hero-card">
+        <span class="hero-card-label">THIS WEEK</span>
+        <strong id="heroPlannedCount">0 / 7</strong>
+        <span>days planned</span>
+        <div class="progress-track"><span id="heroProgress"></span></div>
+      </div>
+    </section>
+
+    <section class="dashboard page-shell">
+      <aside class="sidebar">
+        <div class="panel sidebar-panel">
+          <div class="panel-heading">
+            <div><p class="eyebrow">MY KITCHEN</p><h2>Pantry</h2></div>
+            <button class="text-btn" id="clearPantryBtn" type="button">Clear</button>
+          </div>
+          <p class="muted">Select ingredients you already have. Recipe match scores update instantly.</p>
+          <div class="pantry-preview" id="pantryPreview"></div>
+          <button class="secondary-btn full-btn" id="managePantryBtn" type="button">Manage pantry</button>
+        </div>
+
+        <div class="panel stats-panel">
+          <p class="eyebrow">OVERVIEW</p>
+          <div class="stat-row"><span>Planned days</span><strong id="statDays">0</strong></div>
+          <div class="stat-row"><span>Unique meals</span><strong id="statMeals">0</strong></div>
+          <div class="stat-row"><span>Pantry items</span><strong id="statPantry">0</strong></div>
+          <div class="stat-row"><span>To buy</span><strong id="statShopping">0</strong></div>
+        </div>
+      </aside>
+
+      <div class="content-column">
+        <section class="panel recipes-panel">
+          <div class="section-heading">
+            <div><p class="eyebrow">DISCOVER</p><h2>Recipes</h2></div>
+            <span class="result-count" id="resultCount">0 recipes</span>
+          </div>
+
+          <div class="toolbar">
+            <label class="search-box">
+              <span>⌕</span>
+              <input id="searchInput" type="search" placeholder="Search recipe or ingredient..." autocomplete="off" />
+            </label>
+            <select id="categoryFilter" aria-label="Filter category">
+              <option value="all">All meals</option>
+              <option value="Breakfast">Breakfast</option>
+              <option value="Lunch">Lunch</option>
+              <option value="Dinner">Dinner</option>
+            </select>
+            <select id="difficultyFilter" aria-label="Filter difficulty">
+              <option value="all">All levels</option>
+              <option value="Easy">Easy</option>
+              <option value="Medium">Medium</option>
+            </select>
+            <select id="sortSelect" aria-label="Sort recipes">
+              <option value="match">Best match</option>
+              <option value="time">Fastest</option>
+              <option value="name">A–Z</option>
+            </select>
+          </div>
+
+          <div class="quick-filters">
+            <button class="filter-chip" id="cookableBtn" type="button">Ready to cook</button>
+            <button class="filter-chip" id="favoritesBtn" type="button">♡ Favorites</button>
+          </div>
+
+          <div class="recipe-grid" id="recipeGrid"></div>
+          <div class="empty-state hidden" id="recipeEmpty">
+            <span>🍽️</span><h3>No recipes found</h3><p>Try changing your filters or pantry.</p>
+          </div>
+        </section>
+
+        <section class="planner-grid">
+          <div class="panel planner-panel">
+            <div class="section-heading">
+              <div><p class="eyebrow">YOUR WEEK</p><h2>Meal plan</h2></div>
+              <button class="text-btn" id="clearPlanBtn" type="button">Clear week</button>
+            </div>
+            <div class="week-list" id="weekList"></div>
+          </div>
+
+          <div class="panel shopping-panel">
+            <div class="section-heading">
+              <div><p class="eyebrow">AUTO-GENERATED</p><h2>Shopping list</h2></div>
+              <span class="pill" id="shoppingCount">0 items</span>
+            </div>
+            <p class="muted">Only ingredients missing from your pantry are listed.</p>
+            <div id="shoppingList" class="shopping-list"></div>
+          </div>
+        </section>
+      </div>
+    </section>
+  </main>
+
+  <div class="modal-backdrop hidden" id="pantryModal">
+    <section class="modal-card wide-modal" role="dialog" aria-modal="true" aria-labelledby="pantryModalTitle">
+      <div class="modal-head">
+        <div><p class="eyebrow">MY KITCHEN</p><h2 id="pantryModalTitle">Manage pantry</h2></div>
+        <button class="icon-btn modal-close" data-close="pantry" type="button">×</button>
+      </div>
+      <p class="muted">Click ingredients to add or remove them from your pantry.</p>
+      <div class="ingredient-cloud" id="ingredientCloud"></div>
+      <div class="modal-actions">
+        <button class="secondary-btn" id="selectBasicsBtn" type="button">Add kitchen basics</button>
+        <button class="primary-btn modal-close" data-close="pantry" type="button">Done</button>
+      </div>
+    </section>
+  </div>
+
+  <div class="modal-backdrop hidden" id="planModal">
+    <section class="modal-card" role="dialog" aria-modal="true" aria-labelledby="planModalTitle">
+      <div class="modal-head">
+        <div><p class="eyebrow">ADD TO WEEK</p><h2 id="planModalTitle">Plan this meal</h2></div>
+        <button class="icon-btn modal-close" data-close="plan" type="button">×</button>
+      </div>
+      <div class="selected-recipe-box" id="selectedRecipeBox"></div>
+      <label class="field-label" for="daySelect">Choose day</label>
+      <select id="daySelect"></select>
+      <div class="conflict-box hidden" id="conflictBox"></div>
+      <div class="modal-actions">
+        <button class="secondary-btn modal-close" data-close="plan" type="button">Cancel</button>
+        <button class="primary-btn" id="confirmPlanBtn" type="button">Add to plan</button>
+      </div>
+    </section>
+  </div>
+
+  <div class="modal-backdrop hidden" id="detailModal">
+    <section class="modal-card" role="dialog" aria-modal="true" aria-labelledby="detailTitle">
+      <div class="modal-head">
+        <div><p class="eyebrow">RECIPE DETAILS</p><h2 id="detailTitle">Recipe</h2></div>
+        <button class="icon-btn modal-close" data-close="detail" type="button">×</button>
+      </div>
+      <div id="detailContent"></div>
+    </section>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
